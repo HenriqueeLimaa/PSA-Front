@@ -1,0 +1,1 @@
+//Create a protected route to make some of the pages available only for logged users
