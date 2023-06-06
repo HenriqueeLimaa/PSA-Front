@@ -7,7 +7,7 @@ export const SigninContainer = () => {
             <form type='submit'>
                 <div className='input-container'>
                     <label htmlFor="emailInput">Email</label>
-                    <input id="emailInput" type="email" />
+                    <input id="emailInput" type="email" className />
                 </div>
                 <div className='input-container'>
                     <label htmlFor="passwordInput">Password</label>

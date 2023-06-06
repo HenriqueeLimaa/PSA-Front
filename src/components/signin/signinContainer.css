@@ -6,6 +6,14 @@
 
 .input-container > label {
     margin-bottom: 4px;
+    font-size: 20px;
+}
+
+.input-container > input {
+    height: 26px;
+    width: 280px;
+    border-radius: 6px;
+    border: none;
 }
 
 .signin-button {

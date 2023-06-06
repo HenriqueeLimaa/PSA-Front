@@ -1,0 +1,33 @@
+.refund-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 100px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.refund-item:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.refund-item-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.refund-item-buttons > button {
+  border: none;
+  cursor: pointer;
+  padding: 4px 16px;
+  color: white;
+  border-radius: 8px;
+}
+
+.refund-description {
+  max-width: 280px;
+  background-color: beige;
+  padding: 12px 20px;
+}
