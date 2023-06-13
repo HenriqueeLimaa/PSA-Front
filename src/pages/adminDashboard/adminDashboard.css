@@ -40,6 +40,7 @@
 .logout-container > span,
 .logout-container > button {
   margin-right: 6px;
+  max-height: 20px;
 }
 
 .refund-items-container {
