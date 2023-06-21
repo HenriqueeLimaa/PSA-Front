@@ -1,23 +1,23 @@
+/* eslint-disable react/prop-types */
 import "./refundItem.css";
 
-export const RefundItem = () => {
+export const RefundItem = (props) => {
   return (
     <div className="refund-item">
       <div className="refund-item-info">
-        <p>Requester name: Igor</p>
-        <p>Refund value: $396</p>
+        <p>Requester id: {props.user}</p>
+        <p>Refund value: ${props.value}</p>
         <p>Expanse type: Lorem ipsum</p>
-        <p>Request date: 19/06/2022</p>
+        <p>Request date: {props.date}</p>
       </div>
       <div className="refund-description">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <p>{props.description}</p>
       </div>
       <div className="refund-item-buttons">
-        <button style={{backgroundColor: 'rgb(107, 194, 107)'}}>Accept</button>
-        <button style={{backgroundColor: 'rgb(142, 48, 48)'}}>Refuse</button>
+        <button style={{ backgroundColor: "rgb(107, 194, 107)" }}>
+          Accept
+        </button>
+        <button style={{ backgroundColor: "rgb(142, 48, 48)" }}>Refuse</button>
       </div>
     </div>
   );

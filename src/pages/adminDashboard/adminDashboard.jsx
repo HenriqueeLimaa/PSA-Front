@@ -2,38 +2,20 @@
 import { useState, useEffect } from "react";
 import "./adminDashboard.css";
 import { RefundItem } from "../../components/dashboard/refundItem";
-import axios from "axios";
 
 export const AdminDashboard = (props) => {
-  // mocka 3 items na lista
-  const [refundItemsList, setRefundItemsList] = useState(["", ""]);
+  const [refundItemsList, setRefundItemsList] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8081/api/refundRequests", {
-  //     // o mode no cors elimina o bloqueio cors ao fazer o fetch, mas ai precisa fazer aquilo que falei no grupo 
-  //     mode: "no-cors",
-  //     method: "GET",
-  //   })
-  //     .then((res) => console.log(res))
-  //     .then((data) => setRefundItemsList(data));
-
-  //   // axios({
-  //   //   url: 'http://localhost:8081/api/refundRequests',
-  //   //   method: 'GET',
-  //   // })
-  //   // .then((res) => res.json())
-  //   // .then((data) => setRefundItemsList(data))
-  // }, []);
-
-  const fetchHandler = () => {
+  useEffect(() => {
     fetch("http://localhost:8081/api/refundRequests", {
-      // o mode no cors elimina o bloqueio cors ao fazer o fetch, mas ai precisa fazer aquilo que falei no grupo 
-      mode: "no-cors",
       method: "GET",
+      headers: {
+        Origin: "http://127.0.0.1:5173",
+      },
     })
       .then((res) => res.json())
       .then((data) => setRefundItemsList(data));
-  }
+  }, []);
 
   // printa a lista no console sempre que ela é atualizada. A lista deve ser atualizada ao fazer o fetch
   useEffect(() => {
@@ -57,10 +39,18 @@ export const AdminDashboard = (props) => {
           </div>
         )}
         <div className="refund-items-container">
-          {/* {refundItemsList.map((item, index) => {
-            return <RefundItem key={index} />;
-          })} */}
-          <button onClick={fetchHandler}>fetch</button>
+          {refundItemsList.map((item) => {
+            return (
+              <RefundItem
+                key={item.id}
+                value={item.value}
+                date={item.date}
+                description={item.desc}
+                user={item.user}
+              />
+            );
+          })}
+          {/* <button onClick={fetchHandler}>fetch</button> */}
         </div>
       </div>
     </div>
