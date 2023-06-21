@@ -1,20 +1,52 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./adminDashboard.css";
 import { RefundItem } from "../../components/dashboard/refundItem";
+import axios from "axios";
 
 export const AdminDashboard = (props) => {
   // mocka 3 items na lista
-  const [refundItemsList, setRefundItemsList] = useState(["", "", "", "", ""]);
-  const userType = "normal";
-  
-  document.title = props.isAdmin ? 'Admin dashboard' : 'User dashboard'
+  const [refundItemsList, setRefundItemsList] = useState(["", ""]);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8081/api/refundRequests", {
+  //     // o mode no cors elimina o bloqueio cors ao fazer o fetch, mas ai precisa fazer aquilo que falei no grupo 
+  //     mode: "no-cors",
+  //     method: "GET",
+  //   })
+  //     .then((res) => console.log(res))
+  //     .then((data) => setRefundItemsList(data));
+
+  //   // axios({
+  //   //   url: 'http://localhost:8081/api/refundRequests',
+  //   //   method: 'GET',
+  //   // })
+  //   // .then((res) => res.json())
+  //   // .then((data) => setRefundItemsList(data))
+  // }, []);
+
+  const fetchHandler = () => {
+    fetch("http://localhost:8081/api/refundRequests", {
+      // o mode no cors elimina o bloqueio cors ao fazer o fetch, mas ai precisa fazer aquilo que falei no grupo 
+      mode: "no-cors",
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => setRefundItemsList(data));
+  }
+
+  // printa a lista no console sempre que ela é atualizada. A lista deve ser atualizada ao fazer o fetch
+  useEffect(() => {
+    console.log(refundItemsList);
+  }, [refundItemsList]);
+
+  document.title = props.isAdmin ? "Admin dashboard" : "User dashboard";
 
   return (
     <div className="dashboard-page">
       <div className="dashboard-container">
         <div className="logout-container">
-          <span>{props.isAdmin ? 'Admin' : 'Normal User'}</span>
+          <span>{props.isAdmin ? "Admin" : "Normal User"}</span>
           <button onClick={props.onLogout}>Logout</button>
         </div>
         {!props.isAdmin && (
@@ -25,9 +57,10 @@ export const AdminDashboard = (props) => {
           </div>
         )}
         <div className="refund-items-container">
-          {refundItemsList.map((item, index) => {
+          {/* {refundItemsList.map((item, index) => {
             return <RefundItem key={index} />;
-          })}
+          })} */}
+          <button onClick={fetchHandler}>fetch</button>
         </div>
       </div>
     </div>
