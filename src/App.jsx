@@ -1,29 +1,53 @@
 import "./App.css";
-import { useState } from "react";
-// import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { SigninPage } from "./pages/signinPage/signinPage";
 import { AdminDashboard } from "./pages/adminDashboard/adminDashboard";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  let isLoggedInStorage = localStorage.getItem('isLoggedIn');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Faça uma requisição para o backend para verificar se o token é válido
+      axios
+        .get('http://localhost:8081/api/validate-token', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          setIsAdmin(true);
+        })
+        .catch(() => {
+          setIsAdmin(false);
+        });
+    }
+  }, []);
 
   const logoutHandler = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', false);
+    localStorage.removeItem('token');
+    setIsAdmin(false);
   };
 
   const loginHandler = () => {
-    setIsLoggedIn(true);
-    localStorage.setItem('isLoggedIn', true);
+    setIsAdmin(true);
+  };
+
+  const renderContent = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return <AdminDashboard onLogout={logoutHandler} isAdmin={isAdmin} />;
+    } else {
+      return <SigninPage onLogin={loginHandler} />;
+    }
   };
 
   return (
     <div className="app-container">
-      {isLoggedIn === false && <SigninPage onLogin={loginHandler} />}
-      {isLoggedIn === true && <AdminDashboard onLogout={logoutHandler} isAdmin={isAdmin} />}
+      {/* {renderContent()} */}
+      <AdminDashboard />
 
       {/* <BrowserRouter>
         <Routes>
