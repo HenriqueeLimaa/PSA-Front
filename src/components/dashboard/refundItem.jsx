@@ -14,10 +14,10 @@ export const RefundItem = (props) => {
         <p>{props.description}</p>
       </div>
       <div className="refund-item-buttons">
-        <button style={{ backgroundColor: "rgb(107, 194, 107)" }}>
+        <button style={{ backgroundColor: "rgb(107, 194, 107)" }} onClick={props.onAccept} >
           Accept
         </button>
-        <button style={{ backgroundColor: "rgb(142, 48, 48)" }}>Refuse</button>
+        <button style={{ backgroundColor: "rgb(142, 48, 48)" }} onClick={props.onRefuse} >Refuse</button>
       </div>
     </div>
   );
