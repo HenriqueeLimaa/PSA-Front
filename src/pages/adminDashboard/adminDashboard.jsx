@@ -23,14 +23,12 @@ export const AdminDashboard = (props) => {
       .then((data) => setRefundItemsList(data));
   }, []);
 
-  // puxa as informações do usuário do back
-  useEffect(() => {}, []);
-
   const getCurrentDate = () => {
     const currentDate = moment().format("DD/MM/YYYY");
     return currentDate;
   };
 
+  //cria uma nova request
   const createRequestHandler = () => {
     const currentDate = getCurrentDate();
 
@@ -59,6 +57,7 @@ export const AdminDashboard = (props) => {
       method: "PUT",
       headers: {
         Origin: "http://127.0.0.1:5173",
+        Authorization: props.token,
       },
       body: updatedRefund,
     });
@@ -74,7 +73,7 @@ export const AdminDashboard = (props) => {
           <span>{props.isAdmin ? "Admin" : "Normal User"}</span>
           <button onClick={props.onLogout}>Logout</button>
         </div>
-        {!props.isAdmin && (
+        {props.isAdmin && (
           <div className="create-refund-container">
             <p>Create a refund request</p>
             <label htmlFor="request-value">RequestValue</label>

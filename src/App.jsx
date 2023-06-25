@@ -36,16 +36,23 @@ function App() {
       .then((data) => {
         setLoginResponse(data);
         localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("role", data.role);
         setAccessToken(data.accessToken);
         setShowLogin(false);
       });
   };
 
+  console.log("Access token: ", accessToken);
+
   return (
     <div className="app-container">
       {showLogin && <SigninPage onLogin={loginHandler} />}
       {!showLogin && (
-        <AdminDashboard token={accessToken} onLogout={logoutHandler} />
+        <AdminDashboard
+          token={accessToken}
+          onLogout={logoutHandler}
+          isAdmin={localStorage.getItem("role") == "GERENTE"}
+        />
       )}
     </div>
   );
