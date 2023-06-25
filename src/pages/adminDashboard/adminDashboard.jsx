@@ -66,11 +66,6 @@ export const AdminDashboard = (props) => {
   // seta o titulo da janela no navegador
   document.title = props.isAdmin ? "Admin dashboard" : "User dashboard";
 
-  // só pra ver alguma coisa no console
-  const refHandler = () => {
-    console.log(newRequestValue.current.value);
-  };
-
   return (
     <div className="dashboard-page">
       <div className="dashboard-container">
@@ -98,22 +93,57 @@ export const AdminDashboard = (props) => {
           </div>
         )}
         <div className="refund-items-container">
-          {refundItemsList.map((item) => {
-            return (
+          <p>Pendent Requests</p>
+          {refundItemsList
+            .filter((item) => item.status === "PENDENTE")
+            .map((item) => (
               <RefundItem
                 key={item.id}
                 value={item.value}
                 date={item.date}
                 description={item.desc}
                 user={item.user}
+                status={item.status}
                 onAccept={() => onUpdateStatusHandler(item.id, item, "ACEITO")}
                 onRefuse={() =>
                   onUpdateStatusHandler(item.id, item, "RECUSADO")
                 }
               />
-            );
-          })}
-          <button onClick={refHandler}>printRef</button>
+            ))}
+          <p>Accepted Requests</p>
+          {refundItemsList
+            .filter((item) => item.status === "ACEITO")
+            .map((item) => (
+              <RefundItem
+                key={item.id}
+                value={item.value}
+                date={item.date}
+                description={item.desc}
+                user={item.user}
+                status={item.status}
+                onAccept={() => onUpdateStatusHandler(item.id, item, "ACEITO")}
+                onRefuse={() =>
+                  onUpdateStatusHandler(item.id, item, "RECUSADO")
+                }
+              />
+            ))}
+          <p>Refused Requests</p>
+          {refundItemsList
+            .filter((item) => item.status === "RECUSADO")
+            .map((item) => (
+              <RefundItem
+                key={item.id}
+                value={item.value}
+                date={item.date}
+                description={item.desc}
+                user={item.user}
+                status={item.status}
+                onAccept={() => onUpdateStatusHandler(item.id, item, "ACEITO")}
+                onRefuse={() =>
+                  onUpdateStatusHandler(item.id, item, "RECUSADO")
+                }
+              />
+            ))}
         </div>
       </div>
     </div>

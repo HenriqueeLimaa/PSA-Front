@@ -9,6 +9,7 @@ export const RefundItem = (props) => {
         <p>Refund value: ${props.value}</p>
         <p>Expanse type: Lorem ipsum</p>
         <p>Request date: {props.date}</p>
+        <p>Request status: {props.status}</p>
       </div>
       <div className="refund-description">
         <p>{props.description}</p>
