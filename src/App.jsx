@@ -1,61 +1,37 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { SigninPage } from "./pages/signinPage/signinPage";
 import { AdminDashboard } from "./pages/adminDashboard/adminDashboard";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Faça uma requisição para o backend para verificar se o token é válido
-      axios
-        .get('http://localhost:8081/api/validate-token', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(() => {
-          setIsAdmin(true);
-        })
-        .catch(() => {
-          setIsAdmin(false);
-        });
-    }
-  }, []);
-
   const logoutHandler = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setIsAdmin(false);
   };
 
   const loginHandler = () => {
-    setIsAdmin(true);
-  };
+    const loginInfo = {
+      username: document.getElementById("emailInput").value,
+      password: document.getElementById("passwordInput").value,
+    };
 
-  const renderContent = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      return <AdminDashboard onLogout={logoutHandler} isAdmin={isAdmin} />;
-    } else {
-      return <SigninPage onLogin={loginHandler} />;
-    }
+    fetch("http://localhost:8081/api/auth/signin", {
+      method: "POST",
+      headers: {
+        Origin: "http://127.0.0.1:5173",
+      },
+      body: loginInfo,
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   return (
     <div className="app-container">
-      {/* {renderContent()} */}
-      {/* <SigninPage /> */}
-      <AdminDashboard />
-
-      {/* <BrowserRouter>
-        <Routes>
-          <Route path="/signin" element={<SigninPage />} />
-          <Route path="/dashboard" element={<AdminDashboard />} />
-        </Routes>
-      </BrowserRouter> */}
+      <SigninPage onLogin={loginHandler} />
+      {/* <AdminDashboard /> */}
     </div>
   );
 }
