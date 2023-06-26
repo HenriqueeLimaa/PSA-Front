@@ -37,15 +37,22 @@ export const AdminDashboard = (props) => {
       date: currentDate,
       status: "PENDENTE",
       desc: descriptionValue.current.value,
-      user: "",
+      userId: props.userId,
     };
 
-    console.log("ainda nao implementado");
+    fetch('http://localhost:8081/api/refundRequests', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + props.token,
+        Origin: 'http://127.0.0.1:5173',
+      },
+      body: JSON.stringify(requestBody), 
+    })
   };
 
   // O parametro type é uma string que receberá "ACEITO" ou "RECUSADO"
   const onUpdateStatusHandler = (refundId, refund, type) => {
-    console.log(refund);
     const { id, ...refundWithoutId } = refund;
     const updatedRefund = {
       ...refundWithoutId,
@@ -56,10 +63,11 @@ export const AdminDashboard = (props) => {
     fetch(`http://localhost:8081/api/refundRequests/${refundId}`, {
       method: "PUT",
       headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + props.token,
         Origin: "http://127.0.0.1:5173",
-        Authorization: props.token,
       },
-      body: updatedRefund,
+      body: JSON.stringify(updatedRefund),
     });
   };
 
@@ -73,7 +81,7 @@ export const AdminDashboard = (props) => {
           <span>{props.isAdmin ? "Admin" : "Normal User"}</span>
           <button onClick={props.onLogout}>Logout</button>
         </div>
-        {props.isAdmin && (
+        {!props.isAdmin && (
           <div className="create-refund-container">
             <p>Create a refund request</p>
             <label htmlFor="request-value">RequestValue</label>
@@ -104,6 +112,7 @@ export const AdminDashboard = (props) => {
                 description={item.desc}
                 user={item.user}
                 status={item.status}
+                showActionButtons={props.isAdmin}
                 onAccept={() => onUpdateStatusHandler(item.id, item, "ACEITO")}
                 onRefuse={() =>
                   onUpdateStatusHandler(item.id, item, "RECUSADO")
@@ -121,6 +130,7 @@ export const AdminDashboard = (props) => {
                 description={item.desc}
                 user={item.user}
                 status={item.status}
+                showActionButtons={props.isAdmin}
                 onAccept={() => onUpdateStatusHandler(item.id, item, "ACEITO")}
                 onRefuse={() =>
                   onUpdateStatusHandler(item.id, item, "RECUSADO")
@@ -138,6 +148,7 @@ export const AdminDashboard = (props) => {
                 description={item.desc}
                 user={item.user}
                 status={item.status}
+                showActionButtons={props.isAdmin}
                 onAccept={() => onUpdateStatusHandler(item.id, item, "ACEITO")}
                 onRefuse={() =>
                   onUpdateStatusHandler(item.id, item, "RECUSADO")

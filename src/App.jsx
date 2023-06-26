@@ -9,6 +9,7 @@ function App() {
   );
   const [loginResponse, setLoginResponse] = useState("");
   const [showLogin, setShowLogin] = useState(!localStorage.getItem("token"));
+  const [userId, setUserId] = useState('');
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -39,10 +40,11 @@ function App() {
         localStorage.setItem("role", data.role);
         setAccessToken(data.accessToken);
         setShowLogin(false);
+        setUserId(data.id)
       });
   };
 
-  console.log("Access token: ", accessToken);
+  console.log(localStorage.getItem("role") == "GERENTE");
 
   return (
     <div className="app-container">
@@ -52,6 +54,7 @@ function App() {
           token={accessToken}
           onLogout={logoutHandler}
           isAdmin={localStorage.getItem("role") == "GERENTE"}
+          userId={userId}
         />
       )}
     </div>
