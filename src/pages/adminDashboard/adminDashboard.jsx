@@ -15,7 +15,7 @@ export const AdminDashboard = (props) => {
     fetch("http://localhost:8081/api/refundRequests", {
       method: "GET",
       headers: {
-        Authorization: props.token,
+        Authorization: "Bearer " + props.token,
         Origin: "http://127.0.0.1:5173",
       },
     })
