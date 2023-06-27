@@ -44,8 +44,6 @@ function App() {
       });
   };
 
-  console.log(localStorage.getItem("role") == "GERENTE");
-
   return (
     <div className="app-container">
       {showLogin && <SigninPage onLogin={loginHandler} />}
