@@ -118,7 +118,7 @@ export const AdminDashboard = (props) => {
 
   const renderPendents = renderRequests("PENDENTE");
   const renderAccepted = renderRequests("ACEITO");
-  const renderRefused = renderRequests("ACEITO");
+  const renderRefused = renderRequests("RECUSADO");
 
   // seta o titulo da janela no navegador
   document.title = props.isAdmin ? "Admin dashboard" : "User dashboard";
@@ -183,10 +183,12 @@ export const AdminDashboard = (props) => {
         </div>
 
         <div className="refund-items-container">
+        {props.isAdmin && (
           <p className="section-title" style={{ marginTop: "8px" }}>
             Logs
           </p>
-          {logsHTML && (
+        )}
+          {logsHTML && props.isAdmin &&  (
             <div
               className="logs-container"
               dangerouslySetInnerHTML={{ __html: logsHTML }}
